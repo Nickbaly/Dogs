@@ -4,17 +4,17 @@ import requests
 from PIL import Image, ImageTk
 from io import BytesIO
 
-from bottle import response
-
 
 def get_dog_image():
     try:
         response = requests.get("https://dog.ceo/api/breeds/image/random")
         response.raise_for_status()
         data = response.json()
-        return data('message')
+        return data['message']
     except Exception as e:
         mb.showerror("Ошибка", f'Возникла ошибка при запросе к API {e}')
+        return None
+
 
 def show_image():
     image_url = get_dog_image()
@@ -36,10 +36,10 @@ window = Tk()
 window.title('Картинки с собачками')
 window.geometry('360x420')
 
-label = Label()
+label = Label(window)
 label.pack(pady=10)
 
-button = Button('Загрузить изображение', command=show_image)
+button = Button(window, text='Загрузить изображение', command=show_image)
 button.pack(pady=10)
 
 window.mainloop()
